@@ -5,12 +5,6 @@
       "runtime": "go1.x"
     }
   },
-  "builds": [
-    {
-      "src": "api/index.go",
-      "use": "@vercel/go"
-    }
-  ],
   "routes": [
     {
       "src": "/(.*)",
