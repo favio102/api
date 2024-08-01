@@ -1,0 +1,40 @@
+.DS_Store
+Thumbs.db
+
+IDE files
+*.swp
+*.DS_Store
+
+Build output
+/dist
+/build
+
+Dependency directories
+/vendor
+
+Test output
+/test
+/testdata
+
+Coverage reports
+/coverage
+
+IDE-specific files
+.idea
+*.iml
+
+Logs
+*.log
+
+# Node modules
+node_modules/
+
+# Log files
+logs/
+*.log
+
+# Environment variables
+.env
+.exe
+library-management
+main
