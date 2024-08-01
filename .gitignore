@@ -38,3 +38,4 @@ logs/
 .exe
 library-management
 main
+.vercel

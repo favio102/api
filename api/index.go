@@ -14,25 +14,10 @@ import (
 	"library-management/routes"
 )
 
-// @title Library Management API
-// @version 1.0
-// @description This is a sample server for a library management system.
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host localhost:8080
-// @BasePath /
 func createRouter() http.Handler {
-	// Initialize the router
 	router := mux.NewRouter()
 
-	// Register routes and pass the database client
+	// Initialize the database client
 	client := config.ConnectDB()
 	routes.RegisterBookRoutes(router, client)
 
@@ -48,7 +33,7 @@ func createRouter() http.Handler {
 	// Configure CORS
 	frontendURL := os.Getenv("FRONTEND_URL")
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins: []string{frontendURL}, // Allow frontend URL
+		AllowedOrigins: []string{frontendURL},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders: []string{"Content-Type"},
 	})
