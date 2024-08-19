@@ -15,12 +15,15 @@ import (
 var Client *mongo.Client
 
 func LoadEnv() error {
-	err := godotenv.Load()
-	if err != nil {
-		return fmt.Errorf("error loading .env file: %w", err)
+	env := os.Getenv("ENVIRONMENT")
+	if env == "development" {
+		err := godotenv.Load()
+		if err != nil {
+			return fmt.Errorf("error loading .env file: %w", err)
+		}
+		fmt.Println("Loaded environment variables successfully from .env file.")
 	}
-	fmt.Println("Loaded environment variables successfully.")
-	fmt.Println("MONGODB_URL keys set successfully")
+	fmt.Println("Environment variables loaded successfully.")
 	return nil
 }
 
@@ -28,7 +31,7 @@ func ConnectDB() *mongo.Client {
 	// Load environment variables
 	err := LoadEnv()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Failed to load environment variables: %v", err)
 	}
 
 	connectionString := os.Getenv("MONGODB_URL")
