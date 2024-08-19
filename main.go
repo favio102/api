@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"os"
 
+	"api/config"
+	_ "api/docs"
+	"api/routes"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"github.com/swaggo/http-swagger"
-	_ "api/docs"
-	"api/config"
-	"api/routes"
 )
 
 // @title Library Management API
@@ -46,6 +46,7 @@ func createRouter() http.Handler {
 
 	// Configure CORS
 	frontendURL := os.Getenv("FRONTEND_URL")
+	log.Printf("Frontend URL allowed for CORS: %s\n", frontendURL)
 	if frontendURL == "" {
 		log.Println("Warning: FRONTEND_URL is not set in environment variables")
 	}
