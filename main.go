@@ -40,12 +40,17 @@ func createRouter() http.Handler {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 		if _, err := w.Write([]byte(`<html><body><h1>Server is running!</h1></body></html>`)); err != nil {
-			log.Println("Error writing response:", err)
+			log.Println("Error writing response: ", err)
 		}
 	})
 
 	// Configure CORS
 	frontendURL := os.Getenv("FRONTEND_URL")
+	if frontendURL == "" {
+		log.Println("Warning: FRONTEND_URL is not set in environment variables")
+	}
+	log.Println("FRONTEND_URL keys set successfully")
+
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins: []string{frontendURL}, // Allow frontend URL
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
@@ -70,7 +75,7 @@ func main() {
 	// Load environment variables
 	err := config.LoadEnv()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Error loading .env file", err)
 	}
 
 	// Get the port from the environment variable or default to 8080
@@ -78,6 +83,7 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+	log.Printf("Server will run on port %s\n", port)
 
 	// Create the router and wrap it with CORS middleware
 	handler := createRouter()
@@ -85,6 +91,6 @@ func main() {
 	// Start the server
 	log.Printf("Server is running and listening on port %s...\n", port)
 	if err := http.ListenAndServe(":"+port, handler); err != nil {
-		log.Fatalf("Could not start server: %s\n", err.Error())
+		log.Fatalf("Could not start server: %s\n", err)
 	}
 }
