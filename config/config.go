@@ -15,15 +15,10 @@ import (
 var Client *mongo.Client
 
 func LoadEnv() error {
-	env := os.Getenv("ENVIRONMENT")
-	if env == "development" {
-		err := godotenv.Load()
-		if err != nil {
-			return fmt.Errorf("error loading .env file: %w", err)
-		}
-		fmt.Println("Loaded environment variables successfully from .env file.")
+	err := godotenv.Load()
+	if err != nil {
+		return err
 	}
-	fmt.Println("Environment variables loaded successfully.")
 	return nil
 }
 
@@ -31,7 +26,7 @@ func ConnectDB() *mongo.Client {
 	// Load environment variables
 	err := LoadEnv()
 	if err != nil {
-		log.Fatalf("Failed to load environment variables: %v", err)
+		log.Fatal("Error loading .env file")
 	}
 
 	connectionString := os.Getenv("MONGODB_URL")
@@ -46,12 +41,12 @@ func ConnectDB() *mongo.Client {
 
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		log.Fatal("Error connecting to MongoDB: ", err)
+		log.Fatal(err)
 	}
 
 	err = client.Ping(ctx, nil)
 	if err != nil {
-		log.Fatal("Error pinging MongoDB: ", err)
+		log.Fatal(err)
 	}
 
 	fmt.Println("Connected to MongoDB Atlas!")
