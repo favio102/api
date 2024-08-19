@@ -1,4 +1,4 @@
-module library-management
+module api
 
 go 1.22.5
 
@@ -8,7 +8,7 @@ require (
 	github.com/rs/cors v1.11.0
 	github.com/swaggo/http-swagger v1.3.4
 	github.com/swaggo/swag v1.16.3
-	go.mongodb.org/mongo-driver v1.16.0
+	go.mongodb.org/mongo-driver v1.16.1
 )
 
 require (

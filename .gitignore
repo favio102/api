@@ -51,5 +51,6 @@ logs/
 package-lock.json
 
 library-management
+api
 main
 .git

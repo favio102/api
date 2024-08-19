@@ -3,7 +3,7 @@ package routes
 import (
 	"github.com/gorilla/mux"
 	"go.mongodb.org/mongo-driver/mongo"
-	"library-management/controllers"
+	"api/controllers"
 )
 
 func RegisterBookRoutes(router *mux.Router, client *mongo.Client) {

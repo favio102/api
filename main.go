@@ -8,9 +8,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"github.com/swaggo/http-swagger"
-	_ "library-management/docs"
-	"library-management/config"
-	"library-management/routes"
+	_ "api/docs"
+	"api/config"
+	"api/routes"
 )
 
 // @title Library Management API
