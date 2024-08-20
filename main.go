@@ -55,13 +55,10 @@ func createRouter() http.Handler {
 	corsHandler := cors.New(cors.Options{
 		AllowedOrigins:   []string{frontendURL},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Content-Type"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization"},
 		AllowCredentials: true,
-		Debug:            true,
+		Debug:            true, // Enable debugging
 	})
-
-	// Wrap the router with CORS middleware
-	handler := corsHandler.Handler(router)
 
 	// Add Swagger endpoint
 	router.PathPrefix("/swagger/").Handler(httpSwagger.WrapHandler)
@@ -70,6 +67,22 @@ func createRouter() http.Handler {
 	router.NotFoundHandler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Custom 404 - Page Not Found", http.StatusNotFound)
 	})
+
+	// Handle preflight requests for CORS
+	router.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodOptions {
+			w.Header().Set("Access-Control-Allow-Origin", frontendURL)
+			w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+			w.Header().Set("Access-Control-Max-Age", "86400") // Cache preflight results for 24 hours
+			w.WriteHeader(http.StatusOK)
+			return
+		}
+		// Handle actual requests here
+	}).Methods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+
+	// Wrap the router with CORS middleware
+	handler := corsHandler.Handler(router)
 
 	return handler
 }
