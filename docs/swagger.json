@@ -15,7 +15,7 @@
         },
         "version": "1.0"
     },
-    "host": "https://api-0bw2.onrender.com/",
+    "host": "api-0bw2.onrender.com",
     "basePath": "/",
     "paths": {
         "/books": {

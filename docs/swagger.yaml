@@ -34,7 +34,7 @@ definitions:
         description: Publication year
         type: string
     type: object
-host: https://api-0bw2.onrender.com/
+host: api-0bw2.onrender.com
 info:
   contact:
     email: support@swagger.io
