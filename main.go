@@ -57,6 +57,7 @@ func createRouter() http.Handler {
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Content-Type"},
 		AllowCredentials: true,
+		Debug:            true,
 	})
 
 	// Wrap the router with CORS middleware
